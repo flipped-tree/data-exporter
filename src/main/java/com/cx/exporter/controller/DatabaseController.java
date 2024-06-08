@@ -2,9 +2,9 @@ package com.cx.exporter.controller;
 
 import com.cx.exporter.DataExporter;
 import com.cx.exporter.DatabaseCenter;
+import com.cx.exporter.annotation.EnableLog;
 import com.cx.exporter.request.GetTableFieldsRequest;
 import com.cx.exporter.request.ShowTableInfoRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +17,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @RestController
 @RequestMapping("/database")
 public class DatabaseController {
 
+    @EnableLog
     @PostMapping("/exportCreateTable")
     public ResponseEntity<String> exportCreateTable(@Validated @RequestBody ShowTableInfoRequest request) throws SQLException, IOException {
         List<String> dataList = new DatabaseCenter(request.getJdbcUrl(), request.getUserName(),
@@ -30,6 +30,7 @@ public class DatabaseController {
         return ResponseEntity.ok(filePath);
     }
 
+    @EnableLog
     @PostMapping("/getTableFields")
     public ResponseEntity<Map<String, List<String>>> getTableFields(@Validated @RequestBody GetTableFieldsRequest request) throws SQLException {
         Map<String, List<String>> tableFields = new DatabaseCenter(request.getJdbcUrl(), request.getUserName(),
