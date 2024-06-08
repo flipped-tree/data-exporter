@@ -17,7 +17,9 @@ public class DatabaseCenter {
 
     DataSource dataSource;
 
-    public DatabaseCenter(String jdbcUrl, String userName, String password) {
+    public DatabaseCenter(String jdbcUrl,
+                          String userName,
+                          String password) {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
         hikariConfig.setJdbcUrl(jdbcUrl);
@@ -30,7 +32,8 @@ public class DatabaseCenter {
     }
 
     public List<String> getCreateTableList(List<String> tableNames) throws SQLException {
-        try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement()) {
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
             List<String> createTableSqlList = new ArrayList<>();
             for (String tableName : tableNames) {
                 String sql = "show create table " + tableName;
@@ -46,7 +49,8 @@ public class DatabaseCenter {
     }
 
     public Map<String, List<String>> getTableFields(List<String> tableNames) throws SQLException {
-        try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement()) {
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
             Map<String, List<String>> tableFieldsMap = new HashMap<>();
             for (String tableName : tableNames) {
                 String showColumnSql = "show columns from " + tableName;
