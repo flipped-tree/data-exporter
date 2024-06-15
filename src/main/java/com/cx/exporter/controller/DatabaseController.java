@@ -3,6 +3,7 @@ package com.cx.exporter.controller;
 import com.cx.exporter.DataExporter;
 import com.cx.exporter.DatabaseCenter;
 import com.cx.exporter.annotation.EnableLog;
+import com.cx.exporter.request.BatchExecuteFilesRequest;
 import com.cx.exporter.request.GetTableFieldsRequest;
 import com.cx.exporter.request.ShowTableInfoRequest;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +37,13 @@ public class DatabaseController {
         Map<String, List<String>> tableFields = new DatabaseCenter(request.getJdbcUrl(), request.getUserName(),
                 request.getPassword()).getTableFields(request.getTableNames());
         return ResponseEntity.ok(tableFields);
+    }
+
+    @EnableLog
+    @PostMapping("/batchExecuteFiles")
+    public ResponseEntity<Boolean> batchExecuteFiles(@Validated @RequestBody BatchExecuteFilesRequest request) {
+         new DatabaseCenter(request.getJdbcUrl(), request.getUserName(),
+                request.getPassword()).batchExecuteFiles(request.getFilePaths());
+        return ResponseEntity.ok(true);
     }
 }

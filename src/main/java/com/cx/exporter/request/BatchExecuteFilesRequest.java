@@ -5,10 +5,9 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class GetTableFieldsRequest {
+public class BatchExecuteFilesRequest {
     private String jdbcUrl;
     private String userName;
     private String password;
-    private List<String> tableNames;
-
+    private List<String> filePaths;
 }
