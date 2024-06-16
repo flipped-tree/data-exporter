@@ -42,8 +42,8 @@ public class DatabaseController {
     @EnableLog
     @PostMapping("/batchExecuteFiles")
     public ResponseEntity<Boolean> batchExecuteFiles(@Validated @RequestBody BatchExecuteFilesRequest request) {
-         new DatabaseCenter(request.getJdbcUrl(), request.getUserName(),
-                request.getPassword()).batchExecuteFiles(request.getFilePaths());
-        return ResponseEntity.ok(true);
+        boolean executeResult = new DatabaseCenter(request.getJdbcUrl(), request.getUserName(),
+                request.getPassword()).batchExecutePathFiles(request.getFilePaths());
+        return ResponseEntity.ok(executeResult);
     }
 }

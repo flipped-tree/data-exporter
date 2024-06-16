@@ -44,10 +44,16 @@ public class LogAspect {
                                 Request Args   : {},
                                 Response Args  : {},
                                 Time-Consuming : {} ms
-                            """, request.getRequestURL().toString(), request.getMethod(),
-                    joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName(),
-                    request.getRemoteAddr(), JSONUtil.toJsonPrettyStr(joinPoint.getArgs()),
-                    JSONUtil.toJsonPrettyStr(result), System.currentTimeMillis() - startTime);
+                                ========================================== End ==========================================
+                            """,
+                    request.getRequestURL().toString(),
+                    request.getMethod(),
+                    joinPoint.getSignature().getDeclaringTypeName(),
+                    joinPoint.getSignature().getName(),
+                    request.getRemoteAddr(),
+                    JSONUtil.toJsonStr(joinPoint.getArgs()),
+                    JSONUtil.toJsonStr(result),
+                    System.currentTimeMillis() - startTime);
         }
         return result;
     }
