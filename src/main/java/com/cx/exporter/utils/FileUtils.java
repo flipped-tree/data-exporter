@@ -1,5 +1,7 @@
 package com.cx.exporter.utils;
 
+import com.cx.exporter.exception.ExecuteException;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,7 +16,7 @@ public class FileUtils {
         try (Stream<String> lineStream = Files.lines(Paths.get(filePath))) {
             return lineStream.toList();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ExecuteException(e);
         }
     }
 }

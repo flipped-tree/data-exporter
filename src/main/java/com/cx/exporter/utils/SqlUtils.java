@@ -27,12 +27,6 @@ public class SqlUtils {
                 }
             }
         }
-        // 添加初始的 INSERT 语句部分（如果需要的话）
-        if (!mergedSql.toString().startsWith("insert into user")) {
-            // 这里假设第一行已经包含了完整的INSERT语句（包括列名和第一个值对）
-            // 因此我们只需要从第二行开始合并
-            mergedSql.insert(0, "insert into user (id,name) values ");
-        }
         // 添加分号（如果需要的话）
         if (!mergedSql.toString().endsWith(";")) {
             mergedSql.append(";");

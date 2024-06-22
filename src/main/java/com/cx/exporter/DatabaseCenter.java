@@ -3,6 +3,7 @@ package com.cx.exporter;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.BooleanUtil;
 import com.cx.exporter.constant.SqlConstants;
+import com.cx.exporter.exception.ExecuteException;
 import com.cx.exporter.utils.FileUtils;
 import com.cx.exporter.utils.SqlUtils;
 import com.zaxxer.hikari.HikariConfig;
@@ -89,8 +90,10 @@ public class DatabaseCenter {
             try {
                 return BooleanUtil.isTrue(future.get());
             } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
+                log.error(e.getMessage(), e);
+                Thread.currentThread().interrupt();
             }
+            return false;
         });
     }
 
@@ -105,7 +108,7 @@ public class DatabaseCenter {
                  Statement statement = connection.createStatement()) {
                 return statement.execute(sql);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                throw new ExecuteException(e);
             }
         });
     }

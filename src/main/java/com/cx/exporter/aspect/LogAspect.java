@@ -1,6 +1,7 @@
 package com.cx.exporter.aspect;
 
 import cn.hutool.json.JSONUtil;
+import com.cx.exporter.exception.ExecuteException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -29,7 +30,7 @@ public class LogAspect {
         try {
             result = joinPoint.proceed();
         } catch (Throwable e) {
-            throw new RuntimeException(e);
+            throw new ExecuteException(e);
         } finally {
             // 开始打印请求日志
             ServletRequestAttributes attributes =
