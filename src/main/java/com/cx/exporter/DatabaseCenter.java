@@ -15,6 +15,7 @@ import java.sql.*;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Function;
 
 @Slf4j
 public class DatabaseCenter {
@@ -76,15 +77,7 @@ public class DatabaseCenter {
             return false;
         }
 
-        List<CompletableFuture<Boolean>> futures = new ArrayList<>();
-
-        // 为每个文件创建一个CompletableFuture
-        for (String filePath : filePaths) {
-            CompletableFuture<Boolean> future = executeSqlFileAsync(filePath);
-            futures.add(future);
-        }
-        // 等待所有任务完成，但请注意allOf不提供结果
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+        List<CompletableFuture<Boolean>> futures = executeBatchAsync(filePaths, this::executeBatchAsync);
 
         return futures.stream().allMatch(future -> {
             try {
@@ -97,7 +90,14 @@ public class DatabaseCenter {
         });
     }
 
-    private CompletableFuture<Boolean> executeSqlFileAsync(String filePath) {
+    private <I, O> List<CompletableFuture<O>> executeBatchAsync(List<I> inputList,
+                                                                Function<I, CompletableFuture<O>> function) {
+        List<CompletableFuture<O>> futures = inputList.stream().map(function).toList();
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+        return futures;
+    }
+
+    private CompletableFuture<Boolean> executeBatchAsync(String filePath) {
         return CompletableFuture.supplyAsync(() -> {
             List<String> lines = FileUtils.readLines(filePath);
             if (CollUtil.isEmpty(lines)) {

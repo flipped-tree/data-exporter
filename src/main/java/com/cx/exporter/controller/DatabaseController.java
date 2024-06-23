@@ -1,11 +1,11 @@
 package com.cx.exporter.controller;
 
-import com.cx.exporter.DataExporter;
 import com.cx.exporter.DatabaseCenter;
 import com.cx.exporter.annotation.EnableLog;
 import com.cx.exporter.request.BatchExecuteFilesRequest;
 import com.cx.exporter.request.GetTableFieldsRequest;
 import com.cx.exporter.request.ShowTableInfoRequest;
+import com.cx.exporter.utils.FileUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +27,7 @@ public class DatabaseController {
     public ResponseEntity<String> exportCreateTable(@Validated @RequestBody ShowTableInfoRequest request) throws SQLException, IOException {
         List<String> dataList = new DatabaseCenter(request.getJdbcUrl(), request.getUserName(),
                 request.getPassword()).getCreateTableList(request.getTableNames());
-        String filePath = DataExporter.export2File(dataList);
+        String filePath = FileUtils.export2File(dataList);
         return ResponseEntity.ok(filePath);
     }
 
