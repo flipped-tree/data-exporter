@@ -2,7 +2,7 @@
 
 ### Purpose
 
-#### For this project,provide API to generate data to outer
+#### For this project,provide API to generate data to outer or run main method to generate
 
 ##### * /database/exportCreateTable 
   * API is used to export data to file

@@ -21,7 +21,7 @@ import java.util.function.Function;
 public class DatabaseCenter {
 
 
-    DataSource dataSource;
+    private final DataSource dataSource;
 
     public DatabaseCenter(String jdbcUrl,
                           String userName,
