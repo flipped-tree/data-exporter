@@ -20,7 +20,6 @@ import java.util.function.Function;
 @Slf4j
 public class DatabaseCenter {
 
-
     private final DataSource dataSource;
 
     public DatabaseCenter(String jdbcUrl,
