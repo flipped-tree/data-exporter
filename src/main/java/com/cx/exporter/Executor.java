@@ -1,8 +1,6 @@
 package com.cx.exporter;
 
-import cn.hutool.json.JSONUtil;
-
-
+import com.cx.exporter.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.SQLException;
@@ -14,6 +12,6 @@ public class Executor {
     public static void main(String[] args) throws SQLException {
         DatabaseCenter dataCenter = new DatabaseCenter("", "", "");
         Map<String, List<String>> tableFields = dataCenter.getTableFields(List.of());
-        System.out.println(JSONUtil.toJsonStr(tableFields));
+        System.out.println(JsonUtil.obj2String(tableFields));
     }
 }

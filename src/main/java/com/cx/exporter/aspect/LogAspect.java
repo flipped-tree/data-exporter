@@ -1,7 +1,7 @@
 package com.cx.exporter.aspect;
 
-import cn.hutool.json.JSONUtil;
 import com.cx.exporter.exception.ExecuteException;
+import com.cx.exporter.utils.JsonUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -52,8 +52,8 @@ public class LogAspect {
                     joinPoint.getSignature().getDeclaringTypeName(),
                     joinPoint.getSignature().getName(),
                     request.getRemoteAddr(),
-                    JSONUtil.toJsonStr(joinPoint.getArgs()),
-                    JSONUtil.toJsonStr(result),
+                    JsonUtil.obj2String(joinPoint.getArgs()),
+                    JsonUtil.obj2String(result),
                     System.currentTimeMillis() - startTime);
         }
         return result;

@@ -1,7 +1,5 @@
 package com.cx.exporter.utils;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.text.CharSequenceUtil;
 import com.cx.exporter.exception.ExecuteException;
 
 import java.io.IOException;
@@ -25,8 +23,8 @@ public class FileUtils {
     }
 
     public static String export2File(List<String> dataList) throws IOException {
-        if (CollUtil.isEmpty(dataList)) {
-            return CharSequenceUtil.EMPTY;
+        if (CollUtils.isEmpty(dataList)) {
+            return "";
         }
         String projectRootDir = System.getProperty("user.dir");
         String tempDirPath = projectRootDir + "/temp";

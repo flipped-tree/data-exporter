@@ -1,9 +1,9 @@
 package com.cx.exporter;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.BooleanUtil;
 import com.cx.exporter.constant.SqlConstants;
 import com.cx.exporter.exception.ExecuteException;
+import com.cx.exporter.utils.BooleanUtils;
+import com.cx.exporter.utils.CollUtils;
 import com.cx.exporter.utils.FileUtils;
 import com.cx.exporter.utils.SqlUtils;
 import com.zaxxer.hikari.HikariConfig;
@@ -72,7 +72,7 @@ public class DatabaseCenter {
     }
 
     public boolean batchExecutePathFiles(List<String> filePaths) {
-        if (CollUtil.isEmpty(filePaths)) {
+        if (CollUtils.isEmpty(filePaths)) {
             return false;
         }
 
@@ -80,7 +80,7 @@ public class DatabaseCenter {
 
         return futures.stream().allMatch(future -> {
             try {
-                return BooleanUtil.isTrue(future.get());
+                return BooleanUtils.isTrue(future.get());
             } catch (InterruptedException | ExecutionException e) {
                 log.error(e.getMessage(), e);
                 Thread.currentThread().interrupt();
@@ -99,7 +99,7 @@ public class DatabaseCenter {
     private CompletableFuture<Boolean> executeBatchAsync(String filePath) {
         return CompletableFuture.supplyAsync(() -> {
             List<String> lines = FileUtils.readLines(filePath);
-            if (CollUtil.isEmpty(lines)) {
+            if (CollUtils.isEmpty(lines)) {
                 return false;
             }
             String sql = SqlUtils.generateMultiInsertSql(lines);
